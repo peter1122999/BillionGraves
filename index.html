@@ -1,0 +1,94 @@
+<body onload="getLocation()"> 
+
+<p id="demo"></p>
+<script>
+var x = document.getElementById("demo");
+var lat = 'Grabbing Location';
+var lon = 'Grabbing Location';
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function showPosition(position) {
+  lat = position.coords.latitude;
+  lon =  position.coords.longitude;
+}
+
+
+</script>
+<form action="https://photo.petervarney.repl.run" method="post" enctype="multipart/form-data">
+    Select image to upload:
+    <input type="file" name="fileToUpload" id="fileToUpload">
+    <input type="submit" value="Upload Image" name="submit">
+</form>
+<form id="test-form" method="post">
+  <br>
+  <div>
+    <label>First Name</label>
+    <br>
+    <input type="text" name="fn"/>
+  </div>
+<br>
+  <div>
+    <label>Middle Name</label><br>
+    <input type="text" name="mn"/>
+  </div>
+<br>
+  <div>
+    <label>Last Name</label><br>
+    <input type="text" name="ln"/>
+  </div>
+  <br>
+  <div>
+    <label>Date Of Birth</label><br>
+    <input type="text" name="dob"/>
+  </div>
+  <br>
+  <div>
+    <label>Date Of Death</label><br>
+    <input type="text" name="dod"/>
+  </div><br>
+    <label>Location Data</label><br>
+    <input type="text" name="lat" value="Grabbing Location" id=lat readonly="readonly"><br>
+    <input type="text" name="long" value="Grabbing Location" id=lon readonly="readonly"><br>
+  
+  <br>
+  <div>
+    <button type="button" "id="submit-form">Submit</button>
+</div>
+<script>
+  function sayHi() {
+  console.log(lat);
+  console.log(lon);
+  document.getElementById("lat").value = (lat); 
+  document.getElementById("lon").value = (lon); 
+}
+setTimeout(sayHi, 5000);
+</script>
+</form>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.serializeObject/2.0.3/jquery.serializeObject.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-serialize-object/2.5.0/jquery.serialize-object.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/2.9.0/jquery.serializejson.min.js"></script>
+<script>
+  var $form = $('form#test-form'),
+    url = 'https://script.google.com/macros/s/AKfycbwOscUEvAEsIzrZ8JGRyBSszWx1lXoOGMzg7gal2ODnJz-4-dA/exec'
+
+  $('#submit-form').on('click', function(e) {
+  e.preventDefault();
+  var jqxhr = $.ajax({
+    url: url,
+    method: "GET",
+    dataType: "json",
+    data: $form.serializeObject()
+  }).success(
+    // do something
+  );
+})
+</script>
+
+
